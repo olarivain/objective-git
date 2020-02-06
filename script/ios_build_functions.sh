@@ -44,7 +44,7 @@ function setup_build_environment ()
     then
         # For some stupid reason cmake needs simulator
         # builds to be first
-        ARCHS="x86_64 ${ARCHS} arm64"
+        ARCHS="x86_64 ${ARCHS} arm64 x86_64-apple-darwin"
     fi
 
     # Setup a shared area for our build artifacts
@@ -68,16 +68,32 @@ function build_all_archs ()
 
     echo "Building for ${ARCHS}"
 
-    for ARCH in ${ARCHS}
+    for IN_ARCH in ${ARCHS}
     do
-        if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ]
+        echo "in arch ${IN_ARCH}"
+        if [ "${IN_ARCH}" == "i386" ] || [ "${IN_ARCH}" == "x86_64" ]
         then
+            ARCH=${IN_ARCH}
             PLATFORM="iphonesimulator"
+            NOT_HOST=$PLATFORM
+        elif [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+        then
+
+            ARCH="x86_64"
+            PLATFORM="maccatalyst"
+            NOT_HOST="macos"
         else
+            ARCH=${IN_ARCH}
             PLATFORM="iphoneos"
+            NOT_HOST=$PLATFORM
         fi
 
-        SDKVERSION=$(ios_sdk_version)
+        if [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+        then
+            SDKVERSION="10.15"
+        else
+            SDKVERSION=$(ios_sdk_version)
+        fi
 
         if [ "${ARCH}" == "arm64" ]
         then
@@ -86,14 +102,22 @@ function build_all_archs ()
             HOST="${ARCH}-apple-darwin"
         fi
 
-        SDKNAME="${PLATFORM}${SDKVERSION}"
-        SDKROOT="$(ios_sdk_path ${SDKNAME})"
+        SDKNAME="${NOT_HOST}${SDKVERSION}"
+        if [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+         then
+            SDKROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk"
+        else
+            SDKROOT="$(ios_sdk_path ${SDKNAME})"
+        fi
+        
+        echo "SDK IS ${NOT_HOST}, ${SDKNAME}, ${SDKROOT}."
 
         LOG="${INSTALL_PATH}/log/${LIBRARY_NAME}-${ARCH}.log"
         [ -f "${LOG}" ] && rm "${LOG}"
 
         echo "Building ${LIBRARY_NAME} for ${SDKNAME} ${ARCH}"
         echo "Build log can be found in ${LOG}"
+        echo "The arch is ${ARCH}"
         echo "Please stand by..."
 
         ARCH_INSTALL_PATH="${INSTALL_PATH}/${SDKNAME}-${ARCH}.sdk"

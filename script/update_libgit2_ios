@@ -38,6 +38,12 @@ function build_libgit2 ()
     # export PKG_CONFIG_PATH
     # export LDFLAGS
 
+    if [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+    then
+        LOCAL_C_FLAGS="-fembed-bitcode -isysroot ${SDKROOT} -target x86_64-apple-ios13.0-macabi -miphoneos-version-min=13.0"
+    else
+        LOCAL_C_FLAGS="-fembed-bitcode -isysroot ${SDKROOT} -miphoneos-version-min=${IPHONEOS_DEPLOYMENT_TARGET}"
+    fi
     cmake \
         -DCMAKE_C_COMPILER_WORKS:BOOL=ON \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -47,7 +53,7 @@ function build_libgit2 ()
         -DBUILD_CLAR:BOOL=OFF \
         -DTHREADSAFE:BOOL=ON \
         -DCURL:BOOL=OFF \
-        -DCMAKE_C_FLAGS:STRING="-fembed-bitcode" \
+        -DCMAKE_C_FLAGS:STRING="${LOCAL_C_FLAGS}" \
         "${SYS_ROOT}" \
         -DCMAKE_OSX_ARCHITECTURES:STRING="${ARCH}" \
         "${ROOT_PATH}/External/libgit2" >> "${LOG}" 2>&1
@@ -55,14 +61,20 @@ function build_libgit2 ()
     popd > /dev/null
 
     # push the built library into the list
-    BUILT_LIB_PATHS+=("${ARCH_INSTALL_PATH}/lib/libgit2.a")
+    if [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+    then
+        BUILT_LIB_PATHS_CATALYST+=("${ARCH_INSTALL_PATH}/lib/libgit2.a")
+    else
+        BUILT_LIB_PATHS+=("${ARCH_INSTALL_PATH}/lib/libgit2.a")
+    fi
 }
 
 function fat_binary ()
 {
     echo "Building fat binary..."
 
-    lipo -create "${BUILT_LIB_PATHS[@]}" -output "${INSTALL_PATH}/lib/libgit2.a"
+    lipo -create "${BUILT_LIB_PATHS[@]}" -output "${INSTALL_PATH}/lib/libgit2-ios.a"
+    lipo -create "${BUILT_LIB_PATHS_CATALYST[@]}" -output "${INSTALL_PATH}/lib/libgit2-catalyst.a"
 
     echo "Building done."
 }
