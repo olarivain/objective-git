@@ -30,22 +30,10 @@ function setup_build_environment ()
     # directly (ie not from an Xcode proj)
     if [ -z "${IPHONEOS_DEPLOYMENT_TARGET}" ]
     then
-        IPHONEOS_DEPLOYMENT_TARGET="6.0"
+        IPHONEOS_DEPLOYMENT_TARGET="11.0"
     fi
 
-    # Determine if we can be building 64-bit binaries
-    if [ "${XCODE_MAJOR_VERSION}" -ge "5" ] && [ $(echo ${IPHONEOS_DEPLOYMENT_TARGET} '>=' 6.0 | bc -l) == "1" ]
-    then
-        CAN_BUILD_64BIT="1"
-    fi
-
-    ARCHS="i386 armv7 armv7s"
-    if [ "${CAN_BUILD_64BIT}" -eq "1" ]
-    then
-        # For some stupid reason cmake needs simulator
-        # builds to be first
-        ARCHS="x86_64 ${ARCHS} arm64 x86_64-apple-darwin"
-    fi
+    ARCHS="x86_64 arm64 x86_64-maccatalyst"
 
     # Setup a shared area for our build artifacts
     INSTALL_PATH="${ROOT_PATH}/External/build"
@@ -68,28 +56,28 @@ function build_all_archs ()
 
     echo "Building for ${ARCHS}"
 
-    for IN_ARCH in ${ARCHS}
+    for ARCH in ${ARCHS}
     do
-        echo "in arch ${IN_ARCH}"
-        if [ "${IN_ARCH}" == "i386" ] || [ "${IN_ARCH}" == "x86_64" ]
+        if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ]
         then
-            ARCH=${IN_ARCH}
+            CONCRETE_ARCH=${ARCH}
             PLATFORM="iphonesimulator"
-            NOT_HOST=$PLATFORM
-        elif [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+            SDK_PLATFORM=$PLATFORM
+        elif [ "${ARCH}" == "x86_64-maccatalyst" ]
         then
 
-            ARCH="x86_64"
+            CONCRETE_ARCH="x86_64"
             PLATFORM="maccatalyst"
-            NOT_HOST="macos"
+            SDK_PLATFORM="macos"
         else
-            ARCH=${IN_ARCH}
+            CONCRETE_ARCH=${ARCH}
             PLATFORM="iphoneos"
-            NOT_HOST=$PLATFORM
+            SDK_PLATFORM=$PLATFORM
         fi
 
-        if [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+        if [ "${ARCH}" == "x86_64-maccatalyst" ]
         then
+            # TODO this could be made better
             SDKVERSION="10.15"
         else
             SDKVERSION=$(ios_sdk_version)
@@ -102,22 +90,19 @@ function build_all_archs ()
             HOST="${ARCH}-apple-darwin"
         fi
 
-        SDKNAME="${NOT_HOST}${SDKVERSION}"
-        if [ "${IN_ARCH}" == "x86_64-apple-darwin" ]
+        SDKNAME="${SDK_PLATFORM}${SDKVERSION}"
+        if [ "${ARCH}" == "x86_64-maccatalyst" ]
          then
             SDKROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk"
         else
             SDKROOT="$(ios_sdk_path ${SDKNAME})"
         fi
         
-        echo "SDK IS ${NOT_HOST}, ${SDKNAME}, ${SDKROOT}."
-
         LOG="${INSTALL_PATH}/log/${LIBRARY_NAME}-${ARCH}.log"
         [ -f "${LOG}" ] && rm "${LOG}"
 
         echo "Building ${LIBRARY_NAME} for ${SDKNAME} ${ARCH}"
         echo "Build log can be found in ${LOG}"
-        echo "The arch is ${ARCH}"
         echo "Please stand by..."
 
         ARCH_INSTALL_PATH="${INSTALL_PATH}/${SDKNAME}-${ARCH}.sdk"

@@ -2463,7 +2463,6 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/catalyst/lib",
 					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
 				);
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
@@ -2524,7 +2523,6 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/catalyst/lib",
 					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
 				);
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
@@ -2553,7 +2551,6 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/catalyst/lib",
 					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
 				);
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
@@ -2582,7 +2579,6 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/catalyst/lib",
 					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
 				);
 				MODULEMAP_FILE = ObjectiveGit.modulemap;

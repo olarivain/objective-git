@@ -1,0 +1,5 @@
+- update build scripts with new arch/platform (catalyst) DONE
+- need to split built products to lib/catalyst vs lib/ios
+- need to fix objectivegit linker flags search path to take catalyst vs ios into account
+- ?
+- $$$!
