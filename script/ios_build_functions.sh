@@ -33,7 +33,7 @@ function setup_build_environment ()
         IPHONEOS_DEPLOYMENT_TARGET="11.0"
     fi
 
-    ARCHS="x86_64 arm64 x86_64-maccatalyst"
+    ARCHS="x86_64 arm64 x86_64-apple-darwin"
 
     # Setup a shared area for our build artifacts
     INSTALL_PATH="${ROOT_PATH}/External/build"
@@ -63,7 +63,7 @@ function build_all_archs ()
             CONCRETE_ARCH=${ARCH}
             PLATFORM="iphonesimulator"
             SDK_PLATFORM=$PLATFORM
-        elif [ "${ARCH}" == "x86_64-maccatalyst" ]
+        elif [ "${ARCH}" == "x86_64-apple-darwin" ]
         then
 
             CONCRETE_ARCH="x86_64"
@@ -75,7 +75,7 @@ function build_all_archs ()
             SDK_PLATFORM=$PLATFORM
         fi
 
-        if [ "${ARCH}" == "x86_64-maccatalyst" ]
+        if [ "${ARCH}" == "x86_64-apple-darwin" ]
         then
             # TODO this could be made better
             SDKVERSION="10.15"
@@ -91,7 +91,7 @@ function build_all_archs ()
         fi
 
         SDKNAME="${SDK_PLATFORM}${SDKVERSION}"
-        if [ "${ARCH}" == "x86_64-maccatalyst" ]
+        if [ "${ARCH}" == "x86_64-apple-darwin" ]
          then
             SDKROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk"
         else

@@ -22,7 +22,7 @@ function build_ssh2 ()
     cp -R "${ROOT_PATH}/External/libssh2" "${ARCH_INSTALL_PATH}/libssh2"
     pushd "${ARCH_INSTALL_PATH}/libssh2" > /dev/null
 
-    if [ "${ARCH}" == "x86_64-maccatalyst" ]
+    if [ "${ARCH}" == "x86_64-apple-darwin" ]
     then
         export CFLAGS="-arch ${CONCRETE_ARCH} -fembed-bitcode -pipe -no-cpp-precomp -isysroot ${SDKROOT} -target x86_64-apple-ios13.0-macabi -miphoneos-version-min=13.0"
         export CPPFLAGS="-arch ${CONCRETE_ARCH} -fembed-bitcode -pipe -no-cpp-precomp -isysroot ${SDKROOT} -target x86_64-apple-ios13.0-macabi -miphoneos-version-min=13.0"
@@ -42,7 +42,7 @@ function build_ssh2 ()
 
     rm -rf "${ARCH_INSTALL_PATH}/libssh2"
 
-    if [ "${ARCH}" == "x86_64-maccatalyst" ]
+    if [ "${ARCH}" == "x86_64-apple-darwin" ]
     then
         BUILT_LIBS_CATALYST+=("${ARCH_INSTALL_PATH}/lib/libssh2.a")
     else
