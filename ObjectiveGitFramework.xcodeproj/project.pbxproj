@@ -1684,6 +1684,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D01B6EE619F82E2000D411BC /* Build configuration list for PBXNativeTarget "ObjectiveGit-iOS" */;
 			buildPhases = (
+				00015F81244127CB00DD8487 /* ShellScript */,
 				D01B6ECE19F82E2000D411BC /* Sources */,
 				D01B6ECF19F82E2000D411BC /* Frameworks */,
 				D01B6ED019F82E2000D411BC /* Headers */,
@@ -1798,6 +1799,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00015F81244127CB00DD8487 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"hey oh\"\n";
+		};
 		4D751E9D215D765D003CD3CE /* Package external libraries */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2461,10 +2479,8 @@
 					External/build/include,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/External/build/package${EFFECTIVE_PLATFORM_NAME}/lib";
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.libgit2.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2521,10 +2537,8 @@
 					External/build/include,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/External/build/package${EFFECTIVE_PLATFORM_NAME}/lib";
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.libgit2.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2549,10 +2563,8 @@
 					External/build/include,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/External/build/package${EFFECTIVE_PLATFORM_NAME}/lib";
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.libgit2.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2577,10 +2589,8 @@
 					External/build/include,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/External/build/lib",
-					"$(PROJECT_DIR)/External/build/tmp/ios/lib",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/External/build/package${EFFECTIVE_PLATFORM_NAME}/lib";
 				MODULEMAP_FILE = ObjectiveGit.modulemap;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.libgit2.$(PRODUCT_NAME:rfc1034identifier)";

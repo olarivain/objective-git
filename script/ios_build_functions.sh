@@ -87,7 +87,7 @@ function build_all_archs ()
         then
             HOST="aarch64-apple-darwin"
         else
-            HOST="${ARCH}-apple-darwin"
+            HOST="${ARCH}"
         fi
 
         SDKNAME="${SDK_PLATFORM}${SDKVERSION}"
