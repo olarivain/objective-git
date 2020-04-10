@@ -58,25 +58,26 @@ function build_ssl ()
 function fat_binary ()
 {
     echo "Copying headers & pkg-config files"
-    mkdir -p "${INSTALL_PATH}/maccatalyst/include/"
-    mkdir -p "${INSTALL_PATH}/iphoneos/include/"
-    cp -r "${ARCH_INSTALL_PATH}/include/openssl" "${INSTALL_PATH}/maccatalyst/include/"
-    cp -r "${ARCH_INSTALL_PATH}/include/openssl" "${INSTALL_PATH}/iphoneos/include/"
+    mkdir -p "${INSTALL_PATH}/package-maccatalyst/include/"
+    mkdir -p "${INSTALL_PATH}/package-iphoneos/include/"
+    cp -r "${ARCH_INSTALL_PATH}/include/openssl" "${INSTALL_PATH}/package-maccatalyst/include/"
+    cp -r "${ARCH_INSTALL_PATH}/include/openssl" "${INSTALL_PATH}/package-iphoneos/include/"
     for pkgfile in "${ARCH_INSTALL_PATH}"/lib/pkgconfig/*.pc; do
-      mkdir -p "${INSTALL_PATH}/maccatalyst/lib/pkgconfig/"
-      mkdir -p "${INSTALL_PATH}/iphoneos/lib/pkgconfig/"
-      cp "${pkgfile}" "${INSTALL_PATH}/maccatalyst/lib/pkgconfig/"
-      cp "${pkgfile}" "${INSTALL_PATH}/iphoneos/lib/pkgconfig/"
-      perl -i -pe "s|^(prefix=${INSTALL_PATH}).*$|\$1|g" "${INSTALL_PATH}/maccatalyst/lib/pkgconfig/$(basename "${pkgfile}")" >> "${LOG}" 2>&1
-      perl -i -pe "s|^(prefix=${INSTALL_PATH}).*$|\$1|g" "${INSTALL_PATH}/iphoneos/lib/pkgconfig/$(basename "${pkgfile}")" >> "${LOG}" 2>&1
+      mkdir -p "${INSTALL_PATH}/package-maccatalyst/lib/pkgconfig/"
+      mkdir -p "${INSTALL_PATH}/package-iphoneos/lib/pkgconfig/"
+      cp "${pkgfile}" "${INSTALL_PATH}/package-maccatalyst/lib/pkgconfig/"
+      cp "${pkgfile}" "${INSTALL_PATH}/package-iphoneos/lib/pkgconfig/"
+      perl -i -pe "s|^(prefix=${INSTALL_PATH}).*$|\$1|g" "${INSTALL_PATH}/package-maccatalyst/lib/pkgconfig/$(basename "${pkgfile}")" >> "${LOG}" 2>&1
+      perl -i -pe "s|^(prefix=${INSTALL_PATH}).*$|\$1|g" "${INSTALL_PATH}/package-iphoneos/lib/pkgconfig/$(basename "${pkgfile}")" >> "${LOG}" 2>&1
     done
 
     echo "Building fat binary..."
 
-    lipo -create "${BUILT_CRYPTO_PATHS[@]}" -output "${INSTALL_PATH}/iphoneos/lib/libcrypto.a"
-    lipo -create "${BUILT_SSL_PATHS[@]}" -output "${INSTALL_PATH}/iphoneos/lib/libssl.a"
-    lipo -create "${BUILT_CRYPTO_CATALYST_PATHS[@]}" -output "${INSTALL_PATH}/maccatalyst/lib/libcrypto.a"
-    lipo -create "${BUILT_SSL_CATALYST_PATHS[@]}" -output "${INSTALL_PATH}/maccatalyst/lib/libssl.a"
+    lipo -create "${BUILT_CRYPTO_PATHS[@]}" -output "${INSTALL_PATH}/package-iphoneos/lib/libcrypto.a"
+    lipo -create "${BUILT_SSL_PATHS[@]}" -output "${INSTALL_PATH}/package-iphoneos/lib/libssl.a"
+    lipo -create "${BUILT_CRYPTO_CATALYST_PATHS[@]}" -output "${INSTALL_PATH}/package-maccatalyst/lib/libcrypto.a"
+    lipo -create "${BUILT_SSL_CATALYST_PATHS[@]}" -output "${INSTALL_PATH}/package-maccatalyst/lib/libssl.a"
+    ln -sf "${INSTALL_PATH}/package-iphoneos" "${INSTALL_PATH}/package-iphonesimulator/"
 
     echo "Building done."
 }

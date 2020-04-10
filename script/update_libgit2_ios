@@ -77,8 +77,8 @@ function fat_binary ()
 {
     echo "Building fat binary..."
 
-    lipo -create "${BUILT_LIB_PATHS[@]}" -output "${INSTALL_PATH}/iphoneos/lib/libgit2-ios.a"
-    lipo -create "${BUILT_LIB_PATHS_CATALYST[@]}" -output "${INSTALL_PATH}/maccatalyst/lib/libgit2-catalyst.a"
+    lipo -create "${BUILT_LIB_PATHS[@]}" -output "${INSTALL_PATH}/package-iphoneos/lib/libgit2.a"
+    lipo -create "${BUILT_LIB_PATHS_CATALYST[@]}" -output "${INSTALL_PATH}/package-maccatalyst/lib/libgit2.a"
 
     echo "Building done."
 }
