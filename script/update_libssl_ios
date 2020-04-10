@@ -77,7 +77,7 @@ function fat_binary ()
     lipo -create "${BUILT_SSL_PATHS[@]}" -output "${INSTALL_PATH}/package-iphoneos/lib/libssl.a"
     lipo -create "${BUILT_CRYPTO_CATALYST_PATHS[@]}" -output "${INSTALL_PATH}/package-maccatalyst/lib/libcrypto.a"
     lipo -create "${BUILT_SSL_CATALYST_PATHS[@]}" -output "${INSTALL_PATH}/package-maccatalyst/lib/libssl.a"
-    ln -sf "${INSTALL_PATH}/package-iphoneos" "${INSTALL_PATH}/package-iphonesimulator/"
+    ln -sf "${INSTALL_PATH}/package-iphoneos/" "${INSTALL_PATH}/package-iphonesimulator"
 
     echo "Building done."
 }
