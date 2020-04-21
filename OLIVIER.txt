@@ -1,5 +1,21 @@
 - update build scripts with new arch/platform (catalyst) DONE
-- need to split built products to lib/catalyst vs lib/ios
-- need to fix objectivegit linker flags search path to take catalyst vs ios into account
+- need to split built products to lib/catalyst vs lib/ios DONE
+- need to fix objectivegit linker flags search path to take catalyst vs ios into account DONE
+- automate building of actual framework + creation of xcframeowrk
 - ?
 - $$$!
+
+
+xcodebuild archive \
+-workspace ObjectiveGitFramework.xcworkspace \
+-scheme "ObjectiveGit iOS" \
+-destination destination="generic/platform=iOS" \
+-archivePath "archives/ObjectiveGit-iOS" \
+SKIP_INSTALL=NO \
+BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+
+xcodebuild -create-xcframework \
+-framework /Users/olarivain/Library/Developer/Xcode/DerivedData/ObjectiveGitFramework-dpejjxhligoaklbdvbejqclvkxwu/Build/Products/Debug-iphoneos/ObjectiveGit.framework \
+-framework /Users/olarivain/Library/Developer/Xcode/DerivedData/ObjectiveGitFramework-dpejjxhligoaklbdvbejqclvkxwu/Build/Products/Debug-iphonesimulator/ObjectiveGit.framework \
+-framework /Users/olarivain/Library/Developer/Xcode/DerivedData/ObjectiveGitFramework-dpejjxhligoaklbdvbejqclvkxwu/Build/Products/Debug-maccatalyst/ObjectiveGit.framework \
+-output ObjectiveGit.xcframework
