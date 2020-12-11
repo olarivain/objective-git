@@ -34,9 +34,9 @@
 #import "NSError+Git.h"
 #import "NSData+Git.h"
 
-#import "git2/branch.h"
-#import "git2/errors.h"
-#import "git2/graph.h"
+#import <git2/branch.h>
+#import <git2/errors.h>
+#import <git2/graph.h>
 
 @implementation GTBranch
 
