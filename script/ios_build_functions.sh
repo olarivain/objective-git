@@ -78,7 +78,7 @@ function build_all_archs ()
         if [ "${ARCH}" == "x86_64-apple-darwin" ]
         then
             # TODO this could be made better
-            SDKVERSION="10.15"
+            SDKVERSION="11.0"
         else
             SDKVERSION=$(ios_sdk_version)
         fi
@@ -93,7 +93,7 @@ function build_all_archs ()
         SDKNAME="${SDK_PLATFORM}${SDKVERSION}"
         if [ "${ARCH}" == "x86_64-apple-darwin" ]
          then
-            SDKROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk"
+            SDKROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk"
         else
             SDKROOT="$(ios_sdk_path ${SDKNAME})"
         fi
