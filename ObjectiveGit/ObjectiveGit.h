@@ -24,13 +24,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "git2.h"
+
 
 //! Project version number for ObjectiveGit.
 FOUNDATION_EXPORT double ObjectiveGitVersionNumber;
 
 //! Project version string for ObjectiveGit.
 FOUNDATION_EXPORT const unsigned char ObjectiveGitVersionString[];
+
+#import "git2.h"
+#import "git2/sys/path.h"
+#import "git2/sys/alloc.h"
 
 #import <ObjectiveGit/GTRepository.h>
 #import <ObjectiveGit/GTRepository+Attributes.h>
