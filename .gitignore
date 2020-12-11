@@ -34,3 +34,4 @@ Carthage/Build
 External/build/
 pkg/
 ObjectiveGit.xcframework/
+experimentation/
